@@ -1,0 +1,13 @@
+FROM python:3.10-slim
+
+WORKDIR /app
+
+
+COPY requirements.txt requirements.txt
+
+
+COPY .. .
+
+RUN pip install --upgrade pip --no-cache-dir \
+    && pip install -r requirements.txt --no-cache-dir
+
