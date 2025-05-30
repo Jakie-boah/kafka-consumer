@@ -2,8 +2,12 @@ from clickhouse_driver import Client
 from settings import settings
 import json
 
-client = Client(host=settings.CLICKHOUSE_HOST)
-
+client = Client(
+        host=settings.CLICKHOUSE_HOST,
+        user='default',                   # Явно укажите пользователя
+        password='your_password',         # И пароль
+        database=settings.CLICKHOUSE_DB,
+    )
 
 def insert_event(event: dict):
     client.execute(

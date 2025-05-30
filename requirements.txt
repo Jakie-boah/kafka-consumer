@@ -1,6 +1,7 @@
 annotated-types==0.7.0
 clickhouse-driver==0.2.9
 confluent-kafka==2.10.0
+kafka-python==2.0.2
 loguru==0.7.3
 pydantic==2.11.5
 pydantic-settings==2.9.1

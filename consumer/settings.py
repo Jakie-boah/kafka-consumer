@@ -3,7 +3,7 @@ from pydantic import Field
 
 
 class Settings(BaseSettings):
-    CLICKHOUSE_HOST: str = Field("localhost", env="CLICKHOUSE_HOST")
+    CLICKHOUSE_HOST: str = Field("clickhouse", env="CLICKHOUSE_HOST")
     CLICKHOUSE_DB: str = Field("metrics", env="CLICKHOUSE_DB")
     CLICKHOUSE_TABLE: str = Field("events", env="CLICKHOUSE_TABLE")
 
