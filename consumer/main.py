@@ -3,12 +3,14 @@ import json
 from loguru import logger
 from consumer.clickhouse import insert_event
 from kafka import KafkaConsumer
+from consumer.settings import settings
 
 
 def run_consumer():
+    servers = settings.KAFKA_BOOTSTRAP_SERVERS.split(',')
     consumer = KafkaConsumer(
         'messages',
-        bootstrap_servers=['158.160.23.254:9094'],
+        bootstrap_servers=servers,
         auto_offset_reset='earliest',
         group_id='echo-messages-to-stdout',
     )
@@ -16,27 +18,14 @@ def run_consumer():
     try:
         logger.info("Kafka consumer started, waiting for messages...")
         for message in consumer:
-            # logger.info(message.value)
-            # logger.info(json.loads(message.value))
-            event = {
-                "user_id": "12",
-                "type": "sdfasdf",
-                "page": "12",
-                "element_id": "asdf",
-                "metadata": "asdf",
-                "duration_seconds": 12,
-            }
+            logger.info(message.value)
+
+            event = json.loads(message.value)
             insert_event(event)
-        # while True:
-        #     msg = consumer.poll(1.0)
-        #     if msg is None:
-        #         continue
-        #     if msg.error():
-        #         raise KafkaException(msg.error())
-        #
-        #     event = json.loads(msg.value().decode("utf-8"))
-        #     logger.info(f"Received event: {event}")
-        #     insert_event(event)
+            logger.info("занес данные")
+
+    except Exception as e:
+        logger.error(e)
 
     except KeyboardInterrupt:
         logger.info("Stopping consumer...")

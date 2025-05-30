@@ -10,10 +10,8 @@ services:
       - ./clickhouse/schema.sql:/docker-entrypoint-initdb.d/schema.sql
 
     environment:
-      - CLICKHOUSE_USER:user
-      - CLICKHOUSE_PASSWORD:password
-
-
+      - CLICKHOUSE_USER=user
+      - CLICKHOUSE_PASSWORD=password
 
   consumer:
     environment:
